@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { ApplicationStyles, Metrics, Colors } from '../../Themes'
 
-export default StyleSheet.create({
+export default {
   ...ApplicationStyles.screen,
   container: {
     flex: 1,
@@ -20,37 +20,42 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  dateLabel: {
+  dateLabel: isFirst => ({
     fontSize: 16,
-    color: Colors.secondaryText,
+    color: isFirst ? Colors.primary : Colors.secondaryText,
     textAlign: 'left',
     alignSelf: 'center'
-  },
+  }),
   priceContainer: {
     flexDirection: 'row',
   },
-  currencyLabel: {
+  currencyLabel: isFirst => ({
     fontSize: 12,
-    color: Colors.secondaryText,
+    color: isFirst ? Colors.primary : Colors.secondaryText,
     textAlign: 'right',
     alignSelf: 'center',
     marginRight: Metrics.smallMargin
-  },
-  priceLabel: {
+  }),
+  priceLabel: isFirst => ({
     fontSize: 28,
     fontWeight: 'bold',
-    color: Colors.secondaryText,
+    color: isFirst ? Colors.primary : Colors.secondaryText,
     textAlign: 'right'
-  },
-  titleLabel: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  }),
+  emptyLabel: {
+    fontSize: 12,
     color: Colors.secondaryText,
-    textAlign: 'left',
-    marginBottom: Metrics.smallMargin
+    textAlign: 'center'
   },
-  descriptionLabel: {
-    color: Colors.secondaryText
+  reloadLabel: {
+    fontSize: 12,
+    color: Colors.white,
+    textAlign: 'center'
+  },
+  reloadButton: {
+    marginTop: Metrics.smallMargin,
+    backgroundColor: Colors.primary,
+    padding: Metrics.smallMargin
   },
   divider: {
     flex: 1,
@@ -89,4 +94,4 @@ export default StyleSheet.create({
     alignSelf: 'center',
     color: Colors.snow
   }
-})
+}
