@@ -1,7 +1,14 @@
 import React from 'react'
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import { get, range, random } from 'lodash'
+import {
+  VictoryChart,
+  VictoryLine,
+  VictoryTooltip,
+  VictoryAxis
+} from "victory-native";
+
 import API from '../Services/Api'
 
 // Styles
@@ -19,7 +26,8 @@ class PriceTrendScreen extends React.PureComponent {
   
     this.state = {
       isLoading: true,
-      priceList: []
+      priceList: [],
+      transitionData: this.getTransitionData()
     }
     this._getCurrentPrice();
   }
@@ -30,7 +38,7 @@ class PriceTrendScreen extends React.PureComponent {
       this.setState({ isLoading: true });
       const result = await api.getCurrentPrice();
       const currentDate = get(result, 'data.time.updatedISO');
-      const currentRate = get(result, 'data.bpi.USD.rate');
+      const currentRate = get(result, 'data.bpi.USD.rate_float');
       if(currentRate && currentDate){
         const date = currentDate.substring(0,10);
         const dateSplit = date.split('-');
@@ -140,6 +148,48 @@ class PriceTrendScreen extends React.PureComponent {
     <ActivityIndicator size="large" color={Colors.charcoal} />
   );
 
+  generateChartData = () => {
+    const list = this.state.priceList.slice().reverse();
+    const result = list.map((item, i) => {
+      const day = item.date.getDate();
+      const month = item.date.getMonth() + 1;
+      const label = `${day}/${month}`;
+      return {
+        date: label,
+        price: parseInt(item.price)
+      }
+    })
+    return result;
+  }
+
+  getTransitionData = () => {
+    const n = 30;
+    return range(n).map(i => {
+      return {
+        x: i,
+        y: random(6000, 7500),
+        label: 'abc'
+      };
+    });
+  };
+
+  _renderChart = () => (
+    <VictoryChart animate={{ duration: 1000 }}>
+      <VictoryLine
+        labelComponent={<VictoryTooltip/>}
+        style={{
+          data: { stroke: "#c43a31" },
+          parent: { border: "3px solid #ccc"}
+        }}
+        data={this.generateChartData()}
+        x="date"
+        y="price"
+      />
+      <VictoryAxis fixLabelOverlap={true}/>
+      <VictoryAxis dependentAxis/>
+    </VictoryChart>
+  );
+
   keyExtractor = (item, index) => index
 
   oneScreensWorth = 20
@@ -149,6 +199,7 @@ class PriceTrendScreen extends React.PureComponent {
       <View style={styles.container}>
         <View style={styles.listContainer}>
           {this.state.isLoading ? this._renderLoading() : this._renderList()}
+          {!this.state.isLoading && this._renderChart()}
         </View>
       </View>
     )

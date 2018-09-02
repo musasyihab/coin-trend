@@ -41,7 +41,9 @@
     "redux-persist": "^5.4.0",
     "redux-saga": "^0.16.0",
     "reduxsauce": "0.7.0",
-    "seamless-immutable": "^7.1.4"
+    "seamless-immutable": "^7.1.4",
+    "victory-native": "30.3.0",
+    "react-native-svg": "6.5.2"
   },
   "devDependencies": {
     "@storybook/addon-storyshots": "^3.4.0",
