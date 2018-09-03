@@ -20,9 +20,19 @@ export default {
     alignItems: 'center',
     justifyContent: 'center'
   },
+  latestLabel: {
+    flex: 1,
+    fontSize: 12,
+    color: Colors.white,
+    backgroundColor: Colors.primary,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    padding: Metrics.smallMargin,
+    alignSelf: 'center'
+  },
   dateLabel: isFirst => ({
     fontSize: 16,
-    color: isFirst ? Colors.primary : Colors.secondaryText,
+    color: isFirst ? Colors.primary : Colors.white,
     textAlign: 'left',
     alignSelf: 'center'
   }),
@@ -31,7 +41,7 @@ export default {
   },
   currencyLabel: isFirst => ({
     fontSize: 12,
-    color: isFirst ? Colors.primary : Colors.secondaryText,
+    color: isFirst ? Colors.primary : Colors.white,
     textAlign: 'right',
     alignSelf: 'center',
     marginRight: Metrics.smallMargin
@@ -39,7 +49,7 @@ export default {
   priceLabel: isFirst => ({
     fontSize: 28,
     fontWeight: 'bold',
-    color: isFirst ? Colors.primary : Colors.secondaryText,
+    color: isFirst ? Colors.primary : Colors.white,
     textAlign: 'right'
   }),
   emptyLabel: {
@@ -65,8 +75,7 @@ export default {
   },
   listContent: {
     marginTop: Metrics.baseMargin,
-    paddingTop: 16,
-    backgroundColor: Colors.white
+    paddingTop: 16
   },
   categoryContainer: {
     flexDirection: 'row',
@@ -93,5 +102,12 @@ export default {
     fontWeight: 'bold',
     alignSelf: 'center',
     color: Colors.snow
+  },
+  chartContainer: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: Colors.white,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }

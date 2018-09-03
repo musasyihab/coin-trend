@@ -1,12 +1,16 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import { get, range, random } from 'lodash'
 import {
   VictoryChart,
+  VictoryVoronoiContainer,
   VictoryLine,
   VictoryTooltip,
-  VictoryAxis
+  VictoryAxis,
+  VictoryTheme,
+  VictoryLegend,
+  Vic
 } from "victory-native";
 
 import API from '../Services/Api'
@@ -14,6 +18,8 @@ import API from '../Services/Api'
 // Styles
 import styles from './Styles/PriceTrendScreenStyle'
 import { Colors } from '../Themes';
+
+const windowWidth = Dimensions.get('window').width - 30;
 
 class PriceTrendScreen extends React.PureComponent {
   static navigationOptions = {
@@ -104,7 +110,8 @@ class PriceTrendScreen extends React.PureComponent {
     console.log(dateString);
     return (
       <TouchableOpacity style={styles.row} onPress={this._navigateToDetail(item)}>
-        <View style={styles.rowContainer}>
+        { isFirst && <Text style={styles.latestLabel}>{'LATEST PRICE'}</Text> }
+        <View style={styles.rowContainer}>  
           <Text style={styles.dateLabel(isFirst)}>{dateString}</Text>
           <View style={styles.priceContainer}>
             <Text style={styles.currencyLabel(isFirst)}>{'USD'}</Text>
@@ -174,20 +181,48 @@ class PriceTrendScreen extends React.PureComponent {
   };
 
   _renderChart = () => (
-    <VictoryChart animate={{ duration: 1000 }}>
-      <VictoryLine
-        labelComponent={<VictoryTooltip/>}
+    <View
+      style={styles.chartContainer}>
+      <VictoryChart
+        responsive={true}
+        width={windowWidth}
+        animate={{ duration: 1000 }}
+        theme={VictoryTheme.material}
+        containerComponent={
+          <VictoryVoronoiContainer
+            labels={({ date, price }) => `${date}: ${price}`}
+            responsive={true}
+          />
+        }
         style={{
-          data: { stroke: "#c43a31" },
-          parent: { border: "3px solid #ccc"}
+          label: { fill: Colors.white }
         }}
-        data={this.generateChartData()}
-        x="date"
-        y="price"
-      />
-      <VictoryAxis fixLabelOverlap={true}/>
-      <VictoryAxis dependentAxis/>
-    </VictoryChart>
+      >
+        <VictoryLine
+          style={{
+            data: { stroke: Colors.primary },
+            parent: { border: "1px solid #ccc"}
+          }}
+          data={this.generateChartData()}
+          x="date"
+          y="price"
+        />
+        <VictoryAxis
+          fixLabelOverlap={true}
+          style={{
+            axis: { stroke: Colors.primary },
+            ticklables: { fill: Colors.white }
+          }}
+        />
+        <VictoryAxis
+          dependentAxis
+          style={{
+            axis: { stroke: Colors.primary },
+            ticklables: { fill: Colors.white }
+          }}
+        />
+      </VictoryChart>
+    </View>
   );
 
   keyExtractor = (item, index) => index
