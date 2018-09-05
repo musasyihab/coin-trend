@@ -4,6 +4,7 @@ import { addNavigationHelpers } from 'react-navigation'
 import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 import AppNavigation from './AppNavigation'
+import Constants from '../Constants/Constants'
 
 class ReduxNavigation extends React.Component {
   componentWillMount () {
@@ -11,7 +12,7 @@ class ReduxNavigation extends React.Component {
     BackHandler.addEventListener('hardwareBackPress', () => {
       const { dispatch, nav } = this.props
       // change to whatever is your first screen, otherwise unpredictable results may occur
-      if (nav.routes.length === 1 && (nav.routes[0].routeName === 'LaunchScreen')) {
+      if (nav.routes.length === 1 && (nav.routes[0].routeName === Constants.INITIAL_ROUTE_NAME)) {
         return false
       }
       // if (shouldCloseApp(nav)) return false
