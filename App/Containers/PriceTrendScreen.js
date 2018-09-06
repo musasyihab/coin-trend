@@ -1,21 +1,19 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Dimensions, Modal, TextInput } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
-import { get, range, random } from 'lodash'
-import {
-  VictoryChart,
-  VictoryVoronoiContainer,
-  VictoryLine,
-  VictoryAxis,
-  VictoryTheme,
-} from "victory-native";
+import { get } from 'lodash'
+
+import Button from '../Components/Button'
+import InputPurchaseModal from '../Components/InputPurchaseModal'
+import PriceChart from '../Components/PriceChart'
+import ProfitSection from '../Components/ProfitSection'
 
 import API from '../Services/Api'
 import CoinActions from '../Redux/CoinRedux'
 
 // Styles
 import styles from './Styles/PriceTrendScreenStyle'
-import { Colors, Metrics } from '../Themes';
+import { Colors } from '../Themes';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -37,7 +35,6 @@ class PriceTrendScreen extends React.PureComponent {
     this.state = {
       isLoading: true,
       priceList: [],
-      transitionData: this.getTransitionData(),
       showModal: false,
       inputPrice: null
     }
@@ -55,10 +52,10 @@ class PriceTrendScreen extends React.PureComponent {
         const date = currentDate.substring(0,10);
         const dateSplit = date.split('-');
         const year = dateSplit[0];
-        const month = dateSplit[1];
+        const month = dateSplit[1]-1;
         const day = dateSplit[2];
         const item = {
-          date: new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2]),
+          date: new Date(year, month, day),
           price: currentRate,
           isLatest: true
         };
@@ -99,12 +96,6 @@ class PriceTrendScreen extends React.PureComponent {
     this.setState({ isLoading: false });
   }
 
-  _navigateToDetail = (selectedNews) => () => {
-    // const { selectSource, navigation: { navigate } } = this.props;
-    // selectSource(selectedNews.id);
-    // navigate(Constants.Routes.NewsListScreen, { headerTitle: selectedNews.name });
-  }
-
   _renderPriceItem ({item}) {
     const { date, price, isLatest } = item;
 
@@ -112,7 +103,7 @@ class PriceTrendScreen extends React.PureComponent {
 
     const dateString = date.toDateString();
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navigateToDetail(item)}>
+      <View style={styles.row}>
         { isLatest && <Text style={styles.latestLabel}>{'LATEST PRICE'}</Text> }
         <View style={styles.rowContainer}>  
           <Text style={styles.dateLabel(isLatest)}>{dateString}</Text>
@@ -122,7 +113,7 @@ class PriceTrendScreen extends React.PureComponent {
           </View>
         </View>
         <View style={styles.divider}/>
-      </TouchableOpacity>
+      </View>
     )
   }
 
@@ -145,12 +136,11 @@ class PriceTrendScreen extends React.PureComponent {
       style={styles.listContainer}
     >
       <Text style={styles.emptyLabel}>{'No data found'}</Text>
-      <TouchableOpacity
-        style={styles.reloadButton}
+      <Button
         onPress={this._getCurrentPrice}
-      >
-        <Text style={styles.reloadLabel}>{'RELOAD'}</Text>
-      </TouchableOpacity>
+        isRounded={true}>
+        Reload
+      </Button>
     </View>
   );
 
@@ -158,43 +148,19 @@ class PriceTrendScreen extends React.PureComponent {
     <ActivityIndicator size="large" color={Colors.charcoal} />
   );
 
-  _renderInputButton = () => (
-    <TouchableOpacity onPress={() => this.setupModalVisibility(true)}>
-      <Text style={styles.inputProfitButton}>{'+Input Purchase Price'}</Text>
-    </TouchableOpacity>
-  );
-
-  _renderProfitView = () => {
+  _renderProfitSection = () => {
     const latestPrice = this.state.priceList[0].price;
-    const delta = latestPrice - this.props.savedPurchasePrice;
-    const isProfit = delta >= 0;
-    const profitLabel = isProfit ? 'PROFIT' : 'LOSS';
-    const profitText = isProfit ? `↑${delta.toFixed(4)}` : `↓${delta.toFixed(4) * -1}`;
     return (
-      <View style={{width: windowWidth, padding: Metrics.smallMargin}}>
-        <Text style={styles.profitLabel}>{profitLabel}</Text>
-        <Text style={styles.profitText(isProfit)}>{`${profitText}`}</Text>
-        <View style={styles.savedContainer}>
-          <Text style={styles.savedText}>{`Saved Purchase Price: ${this.props.savedPurchasePrice}`}</Text>
-          <View style={styles.savedButtonsContainer}>
-          <TouchableOpacity onPress={() => this.setupModalVisibility(true)}>
-            <Text style={styles.inputProfitButton}>{'EDIT'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.deletePurchasePrice}>
-            <Text style={styles.inputProfitButton}>{'DELETE'}</Text>
-          </TouchableOpacity>
-          </View>
-        </View>
-        
-      </View>
+      <ProfitSection
+        latestPrice={latestPrice}
+        savedPurchasePrice={this.props.savedPurchasePrice}
+        sectionWidth={windowWidth}
+        onPressEdit={() => this.setupModalVisibility(true)}
+        onPressDelete={this.deletePurchasePrice}
+        onPressInput={() => this.setupModalVisibility(true)}
+      />
     )
-  };
-
-  _renderProfitSection = () => (
-    <View style={styles.profitContainer}>
-      {this.props.savedPurchasePrice ? this._renderProfitView() : this._renderInputButton()}
-    </View>
-  )
+  }
 
   setupModalVisibility = (isShown) => {
     console.log('isShown', isShown);
@@ -210,107 +176,23 @@ class PriceTrendScreen extends React.PureComponent {
     this.props.clearState();
   }
 
-  generateChartData = () => {
-    const list = this.state.priceList.slice().reverse();
-    const result = list.map((item, i) => {
-      const day = item.date.getDate();
-      const month = item.date.getMonth() + 1;
-      const label = `${day}/${month}`;
-      return {
-        date: label,
-        price: parseInt(item.price)
-      }
-    })
-    return result;
-  }
+  _renderPriceChart = () => (
+    <PriceChart
+      chartTitle={'Price in the last 30 days'}
+      chartWidth={chartWidth}
+      chartHeight={chartHeight}
+      data={this.state.priceList}
+    />
+  )
 
-  getTransitionData = () => {
-    const n = 30;
-    return range(n).map(i => {
-      return {
-        x: i,
-        y: random(6000, 7500),
-        label: 'abc'
-      };
-    });
-  };
-
-  _renderChart = () => (
-    <View
-      style={styles.chartContainer}>
-      <Text style={styles.chartTextLabel}>{'Price in the last 30 days'}</Text>
-      <VictoryChart
-        responsive={true}
-        width={chartWidth}
-        height={chartHeight}
-        animate={{ duration: 1000 }}
-        theme={VictoryTheme.material}
-        containerComponent={
-          <VictoryVoronoiContainer
-            labels={({ date, price }) => `${date}: ${price}`}
-            responsive={true}
-          />
-        }
-        style={{
-          label: { fill: Colors.white }
-        }}
-      >
-        <VictoryLine
-          style={{
-            data: { stroke: Colors.primary },
-            parent: { border: "1px solid #ccc"}
-          }}
-          data={this.generateChartData()}
-          x="date"
-          y="price"
-        />
-        <VictoryAxis
-          fixLabelOverlap={true}
-          style={{
-            axis: { stroke: Colors.primary },
-            ticklables: { fill: Colors.white }
-          }}
-        />
-        <VictoryAxis
-          dependentAxis
-          style={{
-            axis: { stroke: Colors.primary },
-            ticklables: { fill: Colors.white }
-          }}
-        />
-      </VictoryChart>
-    </View>
-  );
-
-  _renderModal = () => (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={this.state.showModal}
-      onRequestClose={() => {}}>
-      <View style={styles.modalParentContainer}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.textInputLabel}>{'Please input your purchase price:'}</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="0"
-            defaultValue={this.props.savedPurchasePrice}
-            onChangeText={(inputPrice) => this.setState({inputPrice})}
-            keyboardType={'numeric'}
-          />
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              onPress={this.savePurchasePrice}>
-              <Text style={styles.positiveButton}>{'Save'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              onPress={() => this.setupModalVisibility(false)}>
-              <Text style={styles.negativeButton}>{'Cancel'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
+  _renderInputPurchaseModal = () => (
+    <InputPurchaseModal
+      isVisible={this.state.showModal}
+      onSave={this.savePurchasePrice}
+      onCancel={() => this.setupModalVisibility(false)}
+      onInputChange={(inputPrice) => this.setState({inputPrice})}
+      defaultValue={this.props.savedPurchasePrice}
+    />
   );
 
   keyExtractor = (item, index) => index.toString()
@@ -320,11 +202,11 @@ class PriceTrendScreen extends React.PureComponent {
   render () {
     return (
       <View style={styles.container}>
-        {this._renderModal()}
+        {this._renderInputPurchaseModal()}
         {!this.state.isLoading && this.state.priceList.length > MINIMUM_DATA && this._renderProfitSection()}
         <View style={styles.listContainer}>
           {this.state.isLoading ? this._renderLoading() : this._renderList()}
-          {!this.state.isLoading && this.state.priceList.length > MINIMUM_DATA && this._renderChart()}
+          {!this.state.isLoading && this.state.priceList.length > MINIMUM_DATA && this._renderPriceChart()}
         </View>
       </View>
     )
