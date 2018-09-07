@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputPurchaseModal component renders correctly 1`] = `
+<Modal
+  animationType="fade"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#23232333",
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 5,
+          "height": 120,
+          "justifyContent": "center",
+          "width": 300,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#303030",
+            "fontSize": 14,
+            "marginBottom": 5,
+            "marginTop": 10,
+            "textAlign": "center",
+          }
+        }
+      >
+        Please input your purchase price:
+      </Text>
+      <TextInput
+        allowFontScaling={true}
+        keyboardType="numeric"
+        onChangeText={[Function]}
+        placeholder="0"
+        style={
+          Object {
+            "borderBottomColor": "#b3b3b3",
+            "borderBottomWidth": 1,
+            "fontSize": 16,
+            "marginBottom": 5,
+            "marginTop": 10,
+            "textAlign": "center",
+            "width": 200,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "width": 300,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0,0,0,0)",
+              "borderRadius": 0,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "marginVertical": 5,
+              "opacity": 1,
+              "padding": 5,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#33691e",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              }
+            }
+          >
+            SAVE
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0,0,0,0)",
+              "borderRadius": 0,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "marginVertical": 5,
+              "opacity": 1,
+              "padding": 5,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#303030",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              }
+            }
+          >
+            CANCEL
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;

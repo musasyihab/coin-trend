@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Text, View } from 'react-native'
 import {
-    VictoryChart,
-    VictoryVoronoiContainer,
-    VictoryLine,
-    VictoryAxis,
-    VictoryTheme,
-  } from 'victory-native';
+  VictoryChart,
+  VictoryVoronoiContainer,
+  VictoryLine,
+  VictoryAxis,
+  VictoryTheme,
+} from 'victory-native';
 
 import styles from './Styles/PriceChartStyles'
 import ExamplesRegistry from '../Services/ExamplesRegistry'

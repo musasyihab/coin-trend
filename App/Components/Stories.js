@@ -1,4 +1,4 @@
-import './AlertMessage.story'
-import './DrawerButton.story'
-import './FullButton.story'
-import './RoundedButton.story'
+import './Button.story'
+import './InputPurchaseModal.story'
+import './PriceChart.story'
+import './ProfitSection.story'

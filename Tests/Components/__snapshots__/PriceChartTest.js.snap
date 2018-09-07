@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PriceChart component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#FFFFFF",
+      "justifyContent": "center",
+      "paddingLeft": 10,
+      "paddingRight": 10,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#b3b3b3",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "marginTop": 5,
+        "textAlign": "center",
+      }
+    }
+  >
+    Title
+  </Text>
+  VictoryChart
+</View>
+`;

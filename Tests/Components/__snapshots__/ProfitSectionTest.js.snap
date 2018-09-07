@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfitSection component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#b3b3b3",
+      "justifyContent": "center",
+      "padding": 5,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "padding": 5,
+        "width": 500,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 14,
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+    >
+      PROFIT
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#33691e",
+          "fontSize": 20,
+          "marginBottom": 5,
+          "textAlign": "center",
+        }
+      }
+    >
+      ↑1000.0000
+    </Text>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#303030",
+            "fontSize": 14,
+          }
+        }
+      >
+        Saved Purchase Price: 8000
+      </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0,0,0,0)",
+              "borderRadius": 0,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "marginVertical": 5,
+              "opacity": 1,
+              "padding": 5,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#303030",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              }
+            }
+          >
+            EDIT
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "backgroundColor": "rgba(0,0,0,0)",
+              "borderRadius": 0,
+              "justifyContent": "center",
+              "marginHorizontal": 5,
+              "marginVertical": 5,
+              "opacity": 1,
+              "padding": 5,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#303030",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "textAlign": "center",
+              }
+            }
+          >
+            DELETE
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

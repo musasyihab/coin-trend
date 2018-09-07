@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component renders correctly 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#03A9F4",
+      "borderRadius": 0,
+      "justifyContent": "center",
+      "marginHorizontal": 5,
+      "marginVertical": 5,
+      "opacity": 1,
+      "padding": 5,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "textAlign": "center",
+      }
+    }
+  >
+    HI
+  </Text>
+</View>
+`;
